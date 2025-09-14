@@ -4,13 +4,25 @@ plugins {
 }
 
 group = 'com.github.pedro00627'
-version = '1.0.2'
+project.version = '1.0.3'
+description = 'Universal logging configuration library for Spring Boot applications'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    // Log4j2 core dependencies - provided scope since consuming apps should include them
+    compileOnly 'org.apache.logging.log4j:log4j-core:2.23.1'
+    compileOnly 'org.apache.logging.log4j:log4j-api:2.23.1'
+    compileOnly 'org.apache.logging.log4j:log4j-layout-template-json:2.23.1'
+
+    // Spring Boot Log4j2 starter - provided scope
+    compileOnly 'org.springframework.boot:spring-boot-starter-log4j2:3.3.4'
+
+    // Test dependencies
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 java {
@@ -22,6 +34,10 @@ java {
     withJavadocJar()
 }
 
+test {
+    useJUnitPlatform()
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -29,6 +45,33 @@ publishing {
             groupId = project.group
             artifactId = project.name
             version = project.version
+
+            pom {
+                name = 'Common Logging'
+                description = 'Universal logging configuration library for Spring Boot applications'
+                url = 'https://github.com/pedro00627/common-logging'
+
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'pedro00627'
+                        name = 'Pedro'
+                        email = 'pedro00627@users.noreply.github.com'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:git://github.com/pedro00627/common-logging.git'
+                    developerConnection = 'scm:git:ssh://github.com/pedro00627/common-logging.git'
+                    url = 'https://github.com/pedro00627/common-logging'
+                }
+            }
         }
     }
     repositories {
@@ -38,8 +81,7 @@ publishing {
         }
         maven {
             name = "GitHubPackages"
-            // CORRECCIÓN: Usar substring para evitar problemas con el escape de la expresión regular
-            url = uri("https://maven.pkg.github.com/${project.group.substring(project.group.lastIndexOf('.') + 1)}/${project.name}")
+            url = uri("https://maven.pkg.github.com/pedro00627/common-logging")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
