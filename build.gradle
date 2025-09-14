@@ -1,0 +1,49 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+group = 'com.github.pedro00627'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+        vendor = JvmVendorSpec.ADOPTIUM
+    }
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            groupId = project.group
+            artifactId = project.name
+            version = project.version
+        }
+    }
+    repositories {
+        maven {
+            name = "localMaven"
+            url = uri(new File(System.getProperty('user.home'), '.m2/repository').toURI())
+        }
+        maven {
+            name = "GitHubPackages"
+            // CORRECCIÓN: Usar substring para evitar problemas con el escape de la expresión regular
+            url = uri("https://maven.pkg.github.com/${project.group.substring(project.group.lastIndexOf('.') + 1)}/${project.name}")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
