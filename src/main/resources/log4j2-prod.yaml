@@ -32,7 +32,7 @@ Configuration:
   Loggers:
     Logger:
       - name: co.com.pragma
-        level: info
+        level: debug
         includeLocation: false
         additivity: false
         AppenderRef:

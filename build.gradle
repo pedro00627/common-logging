@@ -3,8 +3,12 @@ plugins {
     id 'maven-publish'
 }
 
+import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.jvm.toolchain.JavaLanguageVersion
+import org.gradle.jvm.toolchain.JvmVendorSpec
+
 group = 'com.github.pedro00627'
-version = '1.0.8'
+version = '1.0.14'
 description = 'Universal logging configuration library for Spring Boot applications'
 
 repositories {
@@ -12,13 +16,11 @@ repositories {
 }
 
 dependencies {
-    // Actualizar la versión del BOM de Spring Boot para que coincida con el microservicio
-    api platform('org.springframework.boot:spring-boot-dependencies:3.5.4')
+    api platform('org.springframework.boot:spring-boot-dependencies:3.2.5')
 
-    // Incluir el starter de Log4j2 y excluir el starter de logging por defecto (Logback)
-    api('org.springframework.boot:spring-boot-starter-log4j2')
-        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-    }
+    api 'org.apache.logging.log4j:log4j-api'
+    api 'org.apache.logging.log4j:log4j-core'
+    api 'org.apache.logging.log4j:log4j-layout-template-json'
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
