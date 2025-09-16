@@ -8,7 +8,7 @@ import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.jvm.toolchain.JvmVendorSpec
 
 group = 'com.github.pedro00627'
-version = '1.0.14'
+version = '1.0.16'
 description = 'Universal logging configuration library for Spring Boot applications'
 
 repositories {

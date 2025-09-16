@@ -16,13 +16,6 @@ Configuration:
 
   Loggers:
     Logger:
-      - name: co.com.pragma
-        level: debug
-        includeLocation: true
-        additivity: false
-        AppenderRef:
-          - ref: Console
-
       - name: org.springframework
         level: info
         additivity: false

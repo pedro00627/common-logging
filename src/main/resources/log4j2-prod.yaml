@@ -5,8 +5,7 @@ Configuration:
       - name: LOG_PATH
         value: ${sys:LOG_PATH:-/var/log/app}
       - name: SERVICE_NAME
-        value: ${sys:SERVICE_NAME:-microservice}
-
+        value: ${spring:application.name:-microservice}
   Appenders:
     RollingFile:
       name: RollingFile
@@ -31,16 +30,8 @@ Configuration:
 
   Loggers:
     Logger:
-      - name: co.com.pragma
-        level: debug
-        includeLocation: false
-        additivity: false
-        AppenderRef:
-          - ref: RollingFile
-          - ref: Console
-
       - name: org.springframework
-        level: warn
+        level: info
         additivity: false
         AppenderRef:
           - ref: RollingFile
@@ -61,7 +52,7 @@ Configuration:
           - ref: Console
 
     Root:
-      level: warn
+      level: info
       AppenderRef:
         - ref: RollingFile
         - ref: Console
